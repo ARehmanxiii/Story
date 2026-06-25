@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>Happy Birthday Maano❤️ - Story Slides</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; user-select:none; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #000;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .story {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    background: #0a0a0a;
+  }
+
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.2) 50%, transparent 80%);
+    pointer-events: none;
+  }
+
+  /* Caption boxes for photo slides */
+  .caption {
+    position: absolute;
+    bottom: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
+    max-width: 520px;
+    text-align: center;
+    z-index: 20;
+    pointer-events: none;
+    animation: captionFadeIn 0.8s ease forwards;
+  }
+
+  @keyframes captionFadeIn {
+    from { opacity:0; transform:translateX(-50%) translateY(12px); }
+    to   { opacity:1; transform:translateX(-50%) translateY(0); }
+  }
+
+  .caption-emoji {
+    font-size: 26px;
+    display: block;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  }
+
+  .caption-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 12px 20px 14px;
+    border-radius: 28px;
+    border: 1px solid rgba(255,215,0,0.3);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .caption-text .nt { color: #FFD966; font-weight: 600; }
+
+  .caption-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 45%, transparent 75%);
+    pointer-events: none;
+  }
+
+  /* Birthday message box */
+  .messageBox {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
+    max-width: 550px;
+    color: white;
+    text-align: center;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    border-radius: 38px;
+    padding: 18px 22px 24px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,215,0,0.25);
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  .title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 52px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    background: linear-gradient(135deg, #FFE6B0, #FFB347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .dear-name {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    color: #FFE5B4;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    background: rgba(255,215,0,0.2);
+    display: inline-block;
+    padding: 4px 20px;
+    border-radius: 40px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .text {
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 400;
+    opacity: 0.95;
+    letter-spacing: 0.3px;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .text::before { content: "✨ "; font-size: 14px; }
+  .text::after  { content: " ✨"; font-size: 14px; }
+
+  /* Progress bars */
+  .progress {
+    position: absolute;
+    top: 12px; left: 16px; right: 16px;
+    display: flex;
+    gap: 6px;
+    z-index: 30;
+    pointer-events: none;
+  }
+
+  .bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .bar div {
+    height: 100%;
+    width: 0%;
+    background: #FFD966;
+    border-radius: 20px;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 2px rgba(255,220,100,0.8);
+  }
+
+  .tap-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,240,0.7);
+    z-index: 40;
+    pointer-events: none;
+    letter-spacing: 1px;
+    font-family: monospace;
+  }
+
+  .slide.active img {
+    animation: subtleZoom 6s infinite alternate;
+  }
+
+  @keyframes subtleZoom {
+    0%   { transform: scale(1); }
+    100% { transform: scale(1.04); }
+  }
+
+  @media (max-width: 550px) {
+    .messageBox { bottom:55px; padding:14px 18px 20px; width:92%; }
+    .title { font-size: 40px; }
+    .dear-name { font-size: 17px; padding: 3px 16px; }
+    .text { font-size: 13px; line-height: 1.55; }
+    .caption-text { font-size: 13px; padding: 10px 16px 12px; }
+    .caption-emoji { font-size: 22px; }
+    .caption { bottom: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="story" id="story">
+  <div class="progress" id="progress"></div>
+
+  <!-- SLIDE 1 -->
+  <div class="slide active" data-photo="1">
+    <img src="photo1.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">🌸</span>
+      <span class="caption-text">The day I saw you, I forgot how to breathe for a second.<br><span class="nt">You were, and still are, my favourite view. 🥰</span></span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide" data-photo="2">
+    <img src="photo2.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">💛</span>
+      <span class="caption-text">Life before you? Boring. Life with you?<br><span class="nt">Pure magic wrapped in the cutest human ever. ✨</span></span>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide" data-photo="3">
+    <img src="photo3.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">🌙</span>
+      <span class="caption-text">Even the moon gets a little jealous when you smile.<br><span class="nt">Wallah, you light up every room, Maano. 🌟</span></span>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide" data-photo="4">
+    <img src="photo4.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">🫶</span>
+      <span class="caption-text">You are the kind of beautiful that makes people<br><span class="nt">rethink their whole aesthetic. 💫</span></span>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide" data-photo="5">
+    <img src="photo5.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">🌹</span>
+      <span class="caption-text">Every photo of you is my favourite photo.<br><span class="nt">But YOU in person? 10x better. I'm so lucky. ❤️</span></span>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide" data-photo="6">
+    <img src="photo6.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">☕</span>
+      <span class="caption-text">You're the reason my mornings feel warm<br><span class="nt">and my evenings feel complete. My person. 🤍</span></span>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <div class="slide" data-photo="7">
+    <img src="photo7.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">🎀</span>
+      <span class="caption-text">Cuteness level: dangerously high. Heart stolen: completely.<br><span class="nt">Maano, you're my whole world. 💝</span></span>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide" data-photo="8">
+    <img src="photo8.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">🕊️</span>
+      <span class="caption-text">The way you exist in this world is my favourite thing.<br><span class="nt">I'd choose you in every lifetime. Every single one. 💌</span></span>
+    </div>
+  </div>
+
+  <!-- SLIDE 9 -->
+  <div class="slide" data-photo="9">
+    <img src="photo9.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">🍬</span>
+      <span class="caption-text">Sweeter than mithai, cuter than anything —<br><span class="nt">yep, that's my Kuchi Poochi. Nobody else comes close. 😍</span></span>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 — last sher -->
+  <div class="slide" data-photo="10">
+    <img src="photo10.jpeg">
+    <div class="caption-overlay"></div>
+    <div class="caption">
+      <span class="caption-emoji">🧸🌸🧸</span>
+      <span class="caption-text" style="font-family:'Noto Nastaliq Urdu',serif;direction:rtl;font-size:22px;line-height:2.2;">
+        🌹 سُنا ہے اُس کے بدن کی تراش ایسی ہے 🌹<br>
+        <span class="nt">🌺 کہ پھول اپنی قبائیں کتر کے دیکھتے ہیں 🌺</span><br><br>
+        🧸💕🧸💕🧸💕🧸
+      </span>
+    </div>
+  </div>
+
+  <!-- SLIDE 11 — GHAZAL (scrollable) -->
+  <div class="slide" id="ghazal-slide" data-photo="11">
+    <img src="photo11.jpeg" alt="Birthday">
+    <div class="overlay"></div>
+    <div id="ghazal-scroll" style="position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:20;pointer-events:auto;padding:65px 0 40px;">
+      <div style="width:88%;max-width:520px;margin:0 auto;text-align:center;background:rgba(0,0,0,0.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:28px;padding:22px 22px 30px;border:1px solid rgba(255,215,0,0.3);box-shadow:0 12px 28px rgba(0,0,0,0.5);">
+        <div style="font-family:'Great Vibes',cursive;font-size:40px;background:linear-gradient(135deg,#FFE6B0,#FFB347);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:12px;">سُنا ہے ❤️</div>
+        <div style="font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif;direction:rtl;font-size:19px;line-height:2.5;color:#fff;text-align:center;">
+          🌹 سُنا ہے لوگ اُسے آنکھ بھر کے دیکھتے ہیں 🌹<br>
+          <span style="color:#FFD966;">سو اُس کے شہر میں کچھ دن ٹھہر کے دیکھتے ہیں ✨</span><br><br>
+          💛 سُنا ہے ربط ہے اُس کو خراب حالوں سے 💛<br>
+          <span style="color:#FFD966;">سو اپنے آپ کو برباد کر کے دیکھتے ہیں 🥀</span><br><br>
+          🌸 سُنا ہے درد کی گاہک ہے چشمِ ناز اُس کی 🌸<br>
+          <span style="color:#FFD966;">سو ہم بھی اُس کی گلی سے گزر کے دیکھتے ہیں 💫</span><br><br>
+          ✍️ سُنا ہے اُس کو بھی ہے شعر و شاعری سے شغف ✍️<br>
+          <span style="color:#FFD966;">سو ہم بھی معجزے اپنے ہنر کے دیکھتے ہیں 🎶</span><br><br>
+          🌺 سُنا ہے بولے تو باتوں سے پھول جھڑتے ہیں 🌺<br>
+          <span style="color:#FFD966;">یہ بات ہے تو چلو بات کر کے دیکھتے ہیں 🌷</span><br><br>
+          🌙 سُنا ہے رات اُسے چاند تکتا رہتا ہے 🌙<br>
+          <span style="color:#FFD966;">ستارے بامِ فلک سے اُتر کے دیکھتے ہیں ⭐</span><br><br>
+          🦋 سُنا ہے دن کو اُسے تتلیاں ستاتی ہیں 🦋<br>
+          <span style="color:#FFD966;">سُنا ہے رات کو جگنو ٹھہر کے دیکھتے ہیں 🌟</span><br><br>
+          🦌 سُنا ہے حشر ہیں اُس کی غزال سی آنکھیں 🦌<br>
+          <span style="color:#FFD966;">سُنا ہے اُس کو ہرن دشت بھر کے دیکھتے ہیں 💞</span><br><br>
+          🌹 سُنا ہے اُس کے بدن کی تراش ایسی ہے 🌹<br>
+          <span style="color:#FFD966;font-weight:600;">کہ پھول اپنی قبائیں کتر کے دیکھتے ہیں 🌸</span><br><br>
+          <span style="font-size:21px;">🧸💕 میری پیاری ماانو — تم ہی میری غزل ہو 💕🧸</span>
+        </div>
+        <div style="margin-top:14px;font-size:11px;color:rgba(255,220,100,0.65);letter-spacing:1px;font-family:monospace;">↕ scroll to read full ghazal ↕</div>
+        <button id="next-btn" style="margin-top:18px;background:linear-gradient(135deg,#FFB347,#FFD966);color:#000;font-weight:700;font-size:16px;border:none;border-radius:50px;padding:13px 40px;cursor:pointer;letter-spacing:1px;box-shadow:0 4px 16px rgba(255,180,0,0.4);pointer-events:auto;">Last Slide ❤️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 — FINAL birthday message -->
+  <div class="slide" data-photo="11">
+    <img src="photo11.jpeg" alt="Birthday">
+    <div class="overlay"></div>
+    <div class="messageBox">
+      <div class="title">Happy Birthday Baibo❤️</div>
+      <div class="dear-name">My Cute Maano ❤️</div>
+      <div class="text">
+        My love, every moment with you feels like a beautiful dream I never want to wake up from.<br>
+        You bring peace, happiness, and warmth into my life in ways I can't fully explain.<br>
+        On this special occasion, I just want you to know how deeply special you are to me❤️.<br>
+        My Kuchi poochi koo ❤️
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tap-hint">✨ tap anywhere → next memory ✨</div>
+
+<script>
+(function() {
+
+  // ── STORY LOGIC ──────────────────────────────────────────────────────────
+  const slides            = document.querySelectorAll('.slide');
+  const progressContainer = document.getElementById('progress');
+  const totalSlides       = slides.length;
+  let currentIndex    = 0;
+  let isTransitioning = false;
+
+  // build progress bars
+  progressContainer.innerHTML = '';
+  for (let i = 0; i < totalSlides; i++) {
+    const wrap = document.createElement('div');
+    wrap.className = 'bar';
+    wrap.appendChild(document.createElement('div'));
+    progressContainer.appendChild(wrap);
+  }
+  const barFills = document.querySelectorAll('.bar div');
+
+  function updateBars(idx) {
+    barFills.forEach((f, i) => f.style.width = i === idx ? '100%' : '0%');
+  }
+
+  function showSlide(idx) {
+    if (isTransitioning || idx < 0 || idx >= totalSlides) return false;
+    isTransitioning = true;
+    slides.forEach(s => s.classList.remove('active'));
+    slides[idx].classList.add('active');
+    updateBars(idx);
+    setTimeout(() => { isTransitioning = false; }, 650);
+    return true;
+  }
+
+  function goNext() {
+    if (isTransitioning) return;
+    const next = (currentIndex + 1) >= totalSlides ? 0 : currentIndex + 1;
+    if (showSlide(next)) currentIndex = next;
+  }
+
+  function goPrev() {
+    if (isTransitioning) return;
+    const prev = (currentIndex - 1) < 0 ? totalSlides - 1 : currentIndex - 1;
+    if (showSlide(prev)) currentIndex = prev;
+  }
+
+  // "Last Slide" button inside ghazal
+  document.getElementById('next-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    const lastIdx = totalSlides - 1;
+    if (showSlide(lastIdx)) currentIndex = lastIdx;
+  });
+
+  // scroll guard — don't advance when scrolling ghazal
+  function isInsideScrollable(el) {
+    while (el && el !== document.body) {
+      const ov = window.getComputedStyle(el).overflowY;
+      if ((ov === 'auto' || ov === 'scroll') && el.scrollHeight > el.clientHeight + 2) return true;
+      el = el.parentElement;
+    }
+    return false;
+  }
+
+  // click (desktop)
+  document.addEventListener('click', function(e) {
+    if (isInsideScrollable(e.target)) return;
+    goNext();
+  });
+
+  // touch — distinguish tap vs scroll
+  let touchStartY = 0, touchStartX = 0, touchMoved = false;
+  document.addEventListener('touchstart', function(e) {
+    touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+    touchMoved = false;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function() {
+    touchMoved = true;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (touchMoved) return;
+    if (isInsideScrollable(e.target)) return;
+    goNext();
+  }, { passive: true });
+
+  // keyboard
+  document.addEventListener('keydown', function(e) {
+    if (e.code === 'Space' || e.code === 'ArrowRight') { e.preventDefault(); goNext(); }
+    if (e.code === 'ArrowLeft') { e.preventDefault(); goPrev(); }
+  });
+
+  // block context menu
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // init
+  slides.forEach((s, i) => i === 0 ? s.classList.add('active') : s.classList.remove('active'));
+  updateBars(0);
+
+})();
+</script>
+</body>
+</html>
