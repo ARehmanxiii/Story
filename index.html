@@ -39,11 +39,28 @@
     z-index: 10;
   }
 
-  .slide canvas, .slide img {
+  /* ── PHOTO FRAME SYSTEM ── */
+  /* blurred background fills the letterbox areas */
+  .slide .bg-blur {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    filter: blur(28px) brightness(0.45) saturate(1.4);
+    transform: scale(1.08); /* hide blur edges */
+    z-index: 0;
+  }
+
+  /* main photo: fully visible, contained, centred */
+  .slide .main-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    z-index: 1;
   }
 
   .slide canvas {
@@ -56,6 +73,7 @@
     inset: 0;
     background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.2) 50%, transparent 80%);
     pointer-events: none;
+    z-index: 2;
   }
 
   /* Caption boxes for photo slides */
@@ -109,6 +127,7 @@
     inset: 0;
     background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 45%, transparent 75%);
     pointer-events: none;
+    z-index: 2;
   }
 
   /* Birthday message box */
@@ -210,7 +229,7 @@
     font-family: monospace;
   }
 
-  .slide.active canvas {
+  .slide.active .main-photo {
     animation: subtleZoom 6s infinite alternate;
   }
 
@@ -237,7 +256,8 @@
 
   <!-- SLIDE 1 -->
   <div class="slide active" data-photo="1">
-    <img src="photo1.jpg">
+    <img class="bg-blur" src="photo1.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo1.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">🌸</span>
@@ -247,7 +267,8 @@
 
   <!-- SLIDE 2 -->
   <div class="slide" data-photo="2">
-    <img src="photo2.jpg">
+    <img class="bg-blur" src="photo2.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo2.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">💛</span>
@@ -257,7 +278,8 @@
 
   <!-- SLIDE 3 -->
   <div class="slide" data-photo="3">
-    <img src="photo3.jpg">
+    <img class="bg-blur" src="photo3.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo3.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">🌙</span>
@@ -267,7 +289,8 @@
 
   <!-- SLIDE 4 -->
   <div class="slide" data-photo="4">
-    <img src="photo4.jpg">
+    <img class="bg-blur" src="photo4.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo4.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">🫶</span>
@@ -277,7 +300,8 @@
 
   <!-- SLIDE 5 -->
   <div class="slide" data-photo="5">
-    <img src="photo5.jpg">
+    <img class="bg-blur" src="photo5.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo5.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">🌹</span>
@@ -287,7 +311,8 @@
 
   <!-- SLIDE 6 -->
   <div class="slide" data-photo="6">
-    <img src="photo6.jpg">
+    <img class="bg-blur" src="photo6.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo6.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">☕</span>
@@ -297,7 +322,8 @@
 
   <!-- SLIDE 7 -->
   <div class="slide" data-photo="7">
-    <img src="photo7.jpg">
+    <img class="bg-blur" src="photo7.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo7.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">🎀</span>
@@ -307,7 +333,8 @@
 
   <!-- SLIDE 8 -->
   <div class="slide" data-photo="8">
-    <img src="photo8.jpg">
+    <img class="bg-blur" src="photo8.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo8.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">🕊️</span>
@@ -317,7 +344,8 @@
 
   <!-- SLIDE 9 -->
   <div class="slide" data-photo="9">
-    <img src="photo9.jpg">
+    <img class="bg-blur" src="photo9.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo9.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">🍬</span>
@@ -327,7 +355,8 @@
 
   <!-- SLIDE 10 — last sher -->
   <div class="slide" data-photo="10">
-    <img src="photo10.jpg">
+    <img class="bg-blur" src="photo10.jpeg" aria-hidden="true">
+    <img class="main-photo" src="photo10.jpeg">
     <div class="caption-overlay"></div>
     <div class="caption">
       <span class="caption-emoji">🧸🌸🧸</span>
@@ -341,7 +370,7 @@
 
   <!-- SLIDE 11 — GHAZAL (scrollable) -->
   <div class="slide" id="ghazal-slide" data-photo="11">
-    <img src="photo11.jpg" alt="Birthday">
+    <canvas id="c11"></canvas>
     <div class="overlay"></div>
     <div id="ghazal-scroll" style="position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:20;pointer-events:auto;padding:65px 0 40px;">
       <div style="width:88%;max-width:520px;margin:0 auto;text-align:center;background:rgba(0,0,0,0.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:28px;padding:22px 22px 30px;border:1px solid rgba(255,215,0,0.3);box-shadow:0 12px 28px rgba(0,0,0,0.5);">
@@ -375,7 +404,7 @@
 
   <!-- SLIDE 12 — FINAL birthday message -->
   <div class="slide" data-photo="11">
-    <img src="photo11.jpg" alt="Birthday">
+    <canvas id="c12"></canvas>
     <div class="overlay"></div>
     <div class="messageBox">
       <div class="title">Happy Birthday Baibo❤️</div>
@@ -395,6 +424,81 @@
 
 <script>
 (function() {
+
+  // ── GENERATE DUMMY PHOTOS ON CANVAS ──────────────────────────────────────
+  const palettes = [
+    ['#ff9a9e','#fad0c4','#ffecd2'],   // 1  blush pink
+    ['#a18cd1','#fbc2eb','#f7d6f7'],   // 2  lavender dream
+    ['#fddb92','#d1fdff','#a1c4fd'],   // 3  golden sky
+    ['#f6d365','#fda085','#ff9a9e'],   // 4  warm sunrise
+    ['#84fab0','#8fd3f4','#a1c4fd'],   // 5  mint breeze
+    ['#f093fb','#f5576c','#fddb92'],   // 6  magenta sunset
+    ['#4facfe','#00f2fe','#a8edea'],   // 7  ocean blue
+    ['#43e97b','#38f9d7','#fddb92'],   // 8  emerald glow
+    ['#fa709a','#fee140','#ffecd2'],   // 9  rose gold
+    ['#30cfd0','#667eea','#764ba2'],   // 10 deep twilight
+    ['#1a1a2e','#16213e','#0f3460'],   // 11 deep night (ghazal bg)
+  ];
+
+  const emojis = ['🌸','💛','🌙','💫','🌹','☕','🎀','💌','🍬','🧸','❤️'];
+  const labels = [
+    'Memory 1','Memory 2','Memory 3','Memory 4','Memory 5',
+    'Memory 6','Memory 7','Memory 8','Memory 9','Memory 10',
+    'Maano ❤️'
+  ];
+
+  function drawPhoto(canvasId, paletteIdx) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    const [c1, c2, c3] = palettes[paletteIdx] || palettes[0];
+
+    // gradient background
+    const grad = ctx.createLinearGradient(0, 0, w, h);
+    grad.addColorStop(0,   c1);
+    grad.addColorStop(0.5, c2);
+    grad.addColorStop(1,   c3);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+
+    // soft bokeh circles
+    for (let i = 0; i < 14; i++) {
+      const bx = Math.random() * w;
+      const by = Math.random() * h;
+      const br = 40 + Math.random() * 120;
+      const bg = ctx.createRadialGradient(bx, by, 0, bx, by, br);
+      bg.addColorStop(0, 'rgba(255,255,255,0.18)');
+      bg.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = bg;
+      ctx.beginPath();
+      ctx.arc(bx, by, br, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // center emoji
+    ctx.font = `${Math.min(w,h) * 0.28}px serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.globalAlpha = 0.35;
+    ctx.fillText(emojis[paletteIdx] || '❤️', w/2, h/2);
+    ctx.globalAlpha = 1;
+
+    // label text
+    ctx.font = `700 ${Math.min(w * 0.06, 28)}px 'Poppins', sans-serif`;
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(labels[paletteIdx] || '', w/2, h * 0.88);
+  }
+
+  // draw all 12 canvases (c12 reuses palette 10 — deep night)
+  for (let i = 1; i <= 11; i++) {
+    drawPhoto('c' + i, i - 1);
+  }
+  drawPhoto('c12', 10); // final slide same deep bg
 
   // ── STORY LOGIC ──────────────────────────────────────────────────────────
   const slides            = document.querySelectorAll('.slide');
